@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: lightsalmon;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  section {
+    margin-top: 20px;
+  }
+  
+  .error-message {
+      color: red;
+  }

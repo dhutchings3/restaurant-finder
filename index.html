@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width" initial-scale="1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Restaurant Finder</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Poppins&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Top Restuarant Finder:</h1>
+            
+            <form id="js-form">
+                <label for="city-search">City:</label>
+                <input type="text" name="city-search" id="js-city-search" placeholder="Fort Worth"required>
+                
+                <label for="max-results">Maximum results</label>
+                <input type="number" name="limit" id="js-limit" value="5">
+                    
+                <input type="submit" value="Find Restaurants!">
+            </form>
+                
+            <p id="js-error-message" class="error-message"></p>
+            <section id="results" class="hidden">
+                <h2>Best Restaurants near you:</h2>
+                <ul id="results-list">
+                </ul>
+            </section>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
