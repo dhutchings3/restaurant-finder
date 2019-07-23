@@ -1,7 +1,8 @@
 'use strict';
 
-const apiKey = 'MDilpgURm2aBUVMFTjxWMgR2b_s2opzOwXgtPipcKAGmGgg1-Cc4czG7kH3PhpWfPQ7HTlwiFtaiJgPXEc2fGT-O9FpVYU2nAc0fLp3iOFBYFn6WCojQNcfQOLU1XXYx'; 
-const searchURL = 'https://api.yelp.com/v3/businesses/search';
+const CLIENT_ID = '4P45WGM4XDI5K2JV3GRR5TPI524HID1BJ0ESK5LESQN4WIHY'; 
+const CLIENT_SECRET = 'KY3REMBAJCVJWTJSQRP5OZB51FOKTUNOG2AS5CCAQ3T4MSM2';
+const searchURL = 'https://api.foursquare.com/v2/venues/search';
 
 
 function formatQueryParams(params) {
@@ -16,19 +17,22 @@ function displayResults(responseJson) {
   for (let i = 0; i < responseJson.data.length; i++){
     $('#results-list').append(
       `<li><h3>${responseJson.data[i].name}</h3>
-      <p>${responseJson.data[i].phone}</p>
-      <p>${responseJson.data[i].rating}</p>
+      <p>${responseJson.data[i].location}</p>
       </li>
     `)};
   $('#results').removeClass('hidden');
 };
 
-function getRestaurantList(query, limit=10) {
+function getRestaurantList(query, limit) {
   const params = {
-    api_key: apiKey,
-    location: [query],
-    limit,
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+    near: query,
+    v: 20180323,
+    limit: limit,
+    intent: 'match',
   };
+
   const queryString = formatQueryParams(params)
   const url = searchURL + '?' + queryString;
 
