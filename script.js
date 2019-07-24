@@ -14,10 +14,12 @@ function formatQueryParams(params) {
 function displayResults(responseJson) {
   console.log(responseJson);
   $('#results-list').empty();
-  for (let i = 0; i < responseJson.venues.length; i++){
+  for (let i = 0; i < responseJson.response.venues.length; i++){
     $('#results-list').append(
-      `<li><h3>${responseJson.venues[i].name}</h3>
-      <p>${responseJson.venues[i].location}</p>
+      `<li><h3>${responseJson.response.venues[i].name}</h3>
+      <p>${responseJson.response.venues[i].location.address}</p>
+      <p>${responseJson.response.venues[i].location.distance}</p>
+      <p>${responseJson.response.venues[i].categories}</p>
       </li>
     `)};
   $('#results').removeClass('hidden');
