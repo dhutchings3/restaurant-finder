@@ -30,7 +30,8 @@ function getRestaurantList(query, limit) {
     near: query,
     v: 20180323,
     limit: limit,
-    intent: 'match',
+    intent: 'browse',
+    categoryId: '4d4b7105d754a06374d81259',
   };
 
   const queryString = formatQueryParams(params)
