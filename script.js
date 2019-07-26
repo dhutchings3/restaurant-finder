@@ -4,7 +4,7 @@ const apiKey = 'AIzaSyDAbBrbxCR1_a-0KNJ6VaSRxjq_5OytLPs'
 
 const CLIENT_ID = '4P45WGM4XDI5K2JV3GRR5TPI524HID1BJ0ESK5LESQN4WIHY'; 
 const CLIENT_SECRET = 'KY3REMBAJCVJWTJSQRP5OZB51FOKTUNOG2AS5CCAQ3T4MSM2';
-const searchURLs = ['https://api.foursquare.com/v2/venues/search', 'https://api.foursquare.com/v2/venues/${responseJson.response.venues[i].categories[0].id}/similar'] 
+const searchURLs = ['https://api.foursquare.com/v2/venues/search', 'https://api.foursquare.com/v2/venues/${responseJson.response.venues[i].categories[0].id}/similar'];
 
 const STORE = [
     {
@@ -82,10 +82,8 @@ function getRestaurantList(query, limit) {
 
   console.log(url);
 
-}
-
-//promise function to run mutiple requests
-Promise.all(searchURLs.map(url =>
+  //promise function to run mutiple requests
+  Promise.all(searchURLs.map(url =>
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -93,11 +91,11 @@ Promise.all(searchURLs.map(url =>
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => {displayResults(responseJson)})
+    .then(responseJson => displayResults(responseJson))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
-    })
-));
+    })));
+}
 
 
 //function for intial submit 
@@ -112,4 +110,3 @@ function watchForm() {
 
 
 $(watchForm);
-$(watchSection);
