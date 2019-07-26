@@ -10,7 +10,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
+        <div class="container" id="location">
             <h1>Top Restuarant Finder:</h1>
             
             <form id="js-form">
@@ -25,12 +25,15 @@
                 
             <p id="js-error-message" class="error-message"></p>
             <section id="results" class="hidden">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13423.664415310748!2d-97.31925505!3d32.741418350000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1563968978227!5m2!1sen!2sus" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
                 <h2>Best Restaurants near you:</h2>
                 <ul id="results-list">
                 </ul>
             </section>
+            <section class="hidden">
+                <ul id="other-events"></ul>
+            </section>
         </div>
         <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </body>
 </html>
