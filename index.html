@@ -11,7 +11,7 @@
     </head>
     <body>
         <div class="container" id="location">
-            <h1>Top Restuarant Finder:</h1>
+            <h1>Food near you:</h1>
             
             <form id="js-form">
                 <label for="city-search">City:</label>
@@ -25,12 +25,17 @@
                 
             <p id="js-error-message" class="error-message"></p>
             <section id="results" class="hidden">
-                <h2>Best Restaurants near you:</h2>
+                <h2>Eateries nearby:</h2>
                 <ul id="results-list">
                 </ul>
+            <section id="restaurant-map" class="hidden" >
+              <h2>Retaurant location:</h2>
+              <ul id="restaurant-location"></ul>
             </section>
-            <section class="hidden">
-                <ul id="other-events"></ul>
+            </section>
+            <section id="more-venues" class="hidden">
+                <h2>A few similar venues:</h2>
+                <ul id="similar-venues"></ul>
             </section>
         </div>
         <script src="script.js"></script>

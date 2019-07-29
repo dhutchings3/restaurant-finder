@@ -1,25 +1,16 @@
 'use strict';
 
-const apiKey = 'AIzaSyDAbBrbxCR1_a-0KNJ6VaSRxjq_5OytLPs'
-
 const CLIENT_ID = '4P45WGM4XDI5K2JV3GRR5TPI524HID1BJ0ESK5LESQN4WIHY'; 
 const CLIENT_SECRET = 'KY3REMBAJCVJWTJSQRP5OZB51FOKTUNOG2AS5CCAQ3T4MSM2';
-const searchURLs = ['https://api.foursquare.com/v2/venues/search', 'https://api.foursquare.com/v2/venues/${responseJson.response.venues[i].categories[0].id}/similar'];
+const restaurantURL = 'https://api.foursquare.com/v2/venues/search';
+const findIdURL = 'https://api.foursquare.com/v2/venues/{restaurantId}/similar';
+const mapURL = 'https://www.google.com/maps/embed/v1/search?key=AIzaSyDAbBrbxCR1_a-0KNJ6VaSRxjq_5OytLPs&q={restaurantAddress}';
 
-const STORE = [
-    {
-        restaurantResults: '${responseJson.response}',
-        name: '${responseJson.response.venues[i].name}',
-        address: '${responseJson.response.venues[i].location.address}',
-        categories: '${responseJson.response.venues[i].categories[0].name}'
-
-    },
-]; 
 
 //function to build web friendly query search to add to end of url
 function formatQueryParams(params) {
   const queryItems = Object.keys(params)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
   return queryItems.join('&');
 }
 
@@ -29,7 +20,7 @@ function displayResults(responseJson) {
   $('#results-list').empty();
   for (let i = 0; i < responseJson.response.venues.length; i++){
     $('#results-list').append(
-     `<li><button type="submit" class="restaurantChoice">${responseJson.response.venues[i].name}</button></h3>
+     `<li><button type="submit" class="restaurantChoice" data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" >${responseJson.response.venues[i].name}</button>
       <p>${responseJson.response.venues[i].location.address}</p>
       <p>${responseJson.response.venues[i].categories[0].name}</p>
       </li>
@@ -40,28 +31,43 @@ function displayResults(responseJson) {
 //function for restaurant selected to pull up directions and similar venues
 function watchSection() {
     $('section').on('click','.restaurantChoice', function (event) {
-      event.preventDefault();
-      getRestaurantLocationMap();
-      getSimilarVenues();
+      event.preventDefault(findIdURL, mapURL);
+      const venueId = $(this).attr('data-id');
+      const venueAddress = $(this).attr('data-filter');
+      console.log(venueId);
+      console.log(venueAddress);
+      const secondURL = findIdURL.replace('{restaurantId}', venueId);
+      const newMapURL = mapURL.replace('{restaurantAddress}', venueAddress);
+      console.log(secondURL);
+      getVenueInfo(venueId, secondURL);
+     let updatedMapURL = newMapURL.replace(/ /g,'+');
+     console.log(updatedMapURL);
+    getRestaurantLocationMap(updatedMapURL);
+    getSimilarVenues(responseJson);
     });
-}
-
-//function to show similar venues based on restaurant chosen
-function getSimilarVenuse() {
-    $('#results').remove()
-    $('#other-events').append(
-        `<li>${STORE.name}</button></h3>
-        <p>${STORE.address}</p>
-        <p>${STORE.categories}</p>
-        </li>
-      `)
-    $('#results').removeClass('hidden');
 };
 
-//function to add google map with location of user
-function getRestaurantLocationMap() {
-    return `<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDAbBrbxCR1_a-0KNJ6VaSRxjq_5OytLPs&q=Space+Needle,Seattle+WA" allowfullscreen>
+//function to show similar venues based on restaurant chosen
+function getSimilarVenues(responseJson) {
+    console.log(responseJson);
+    //$('#results').addClass('hidden')
+    for (let i = 0; i < responseJson.response.similarVenues.items.length; i++){
+    $('#similar-venues').append(
+       `<li><h3>${responseJson.response.similarVenues.items[i].name}</h3>
+       <p>${responseJson.response.similarVenues.items[i].location.address}</p>
+       <p>${responseJson.response.similarVenues.items[i].categories[0].name}</p></li>
+      `)};
+    $('#more-venues').removeClass('hidden');
+};
+
+//function to add google map with location of restaurant clicked
+function getRestaurantLocationMap(updatedMapURL) {
+  console.log('removed');
+  $('#restaurant-location').append(
+    `<iframe width="600" height="450" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
     </iframe>`
+  );
+ $('#restaurant-map').removeClass('hidden');
 };
 
 //function to pull restaurants based off of city input
@@ -78,12 +84,11 @@ function getRestaurantList(query, limit) {
 
   //building url with search query
   const queryString = formatQueryParams(params)
-  const url = searchURLs + '?' + queryString;
+  const url = restaurantURL + '?' + queryString;
 
   console.log(url);
 
-  //promise function to run mutiple requests
-  Promise.all(searchURLs.map(url =>
+  //requesting data from api
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -91,10 +96,41 @@ function getRestaurantList(query, limit) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayResults(responseJson))
+    .then(responseJson => {
+        displayResults(responseJson);
+    })
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
-    })));
+    });
+}
+
+function getVenueInfo(venueId, secondURL) {
+  const venueParams = {
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+    v: 20180323,
+    venue_id: venueId,
+  };
+
+  const queryString = formatQueryParams(venueParams)
+  const newUrl = secondURL + '?' + queryString;
+
+  console.log(newUrl);
+
+    //requesting more data from api
+  fetch(newUrl)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then(responseJson => {
+        getSimilarVenues(responseJson);
+    })
+    .catch(err => {
+      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    });
 }
 
 
@@ -110,3 +146,4 @@ function watchForm() {
 
 
 $(watchForm);
+$(watchSection);
