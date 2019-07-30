@@ -50,7 +50,7 @@ function watchSection() {
 //function to show similar venues based on restaurant chosen
 function getSimilarVenues(responseJson) {
     console.log(responseJson);
-    //$('#results').addClass('hidden')
+    $('#results').addClass('hidden')
     for (let i = 0; i < responseJson.response.similarVenues.items.length; i++){
     $('#similar-venues').append(
        `<li><h3>${responseJson.response.similarVenues.items[i].name}</h3>
