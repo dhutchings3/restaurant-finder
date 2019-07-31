@@ -1,5 +1,21 @@
 
 
+function watchSection() {
+    $('section').on('click','.restaurantChoice', function (event) {
+      event.preventDefault(findIdURL, mapURL);
+      const venueId = $(this).attr('data-id');
+      const venueAddress = $(this).attr('data-filter');
+      console.log(venueId);
+      console.log(venueAddress);
+      const secondURL = findIdURL.replace('{restaurantId}', venueId);
+      const newMapURL = mapURL.replace('{restaurantAddress}', venueAddress);
+      console.log(secondURL);
+      getVenueInfo(venueId, secondURL);
+     let updatedMapURL = newMapURL.replace(/ /g,'+');
+     console.log(updatedMapURL);
+    });
+};
+
 //function to show similar venues based on restaurant chosen
 function getSimilarVenues(responseJson) {
     console.log(responseJson);
@@ -22,3 +38,6 @@ function getRestaurantLocationMap(updatedMapURL) {
     );
    $('#restaurant-map').removeClass('hidden');
   };
+
+  getRestaurantLocationMap(updatedMapURL);
+  getSimilarVenues();

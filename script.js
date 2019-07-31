@@ -32,17 +32,7 @@ function displayResults(responseJson) {
 function watchSection() {
     $('section').on('click','.restaurantChoice', function (event) {
       event.preventDefault(findIdURL, mapURL);
-      const venueId = $(this).attr('data-id');
-      const venueAddress = $(this).attr('data-filter');
-      console.log(venueId);
-      console.log(venueAddress);
-      const secondURL = findIdURL.replace('{restaurantId}', venueId);
-      const newMapURL = mapURL.replace('{restaurantAddress}', venueAddress);
-      console.log(secondURL);
-      getVenueInfo(venueId, secondURL);
-     let updatedMapURL = newMapURL.replace(/ /g,'+');
-     console.log(updatedMapURL);
-    location.replace('https://dhutchings3.github.io/restaurant-finder/restaurants');
+    location.replace('restaurants.html');
     });
 };
 
