@@ -8,7 +8,7 @@
   }
   
   .container {
-    max-width: 600px;
+    max-width: 400px;
     margin: 0 auto;
   }
   
@@ -23,3 +23,58 @@
   .error-message {
       color: red;
   }
+
+  h1{ 
+    font-size: 30px;
+  }
+
+  h2, p, h3{
+    font-size: 18px;
+  }
+
+  .restaurantChoice {
+    font-size: 18px;
+  }
+
+  #js-form {
+      width: 75%;
+  }
+
+  #restaurant-location {
+      display: inline-block;
+  }
+
+   .restaurant{
+      margin: 0px 0px;
+      padding: 0px 0px;
+      display: inline-block;
+
+  }
+
+  section {
+      display: inline-block;
+  }
+
+  @media screen and (min-width: 768px){
+
+    h1{ 
+        font-size: 40px;
+    }
+    h2, p, h3{
+        font-size: 18px;
+   }
+   #js-form {
+       width: 75%;
+   }
+
+   .container {
+    max-width: 800px;
+    margin: 0 auto;
+    }
+
+    #more-venues {
+        float: right;
+        clear: left;
+    }
+
+}

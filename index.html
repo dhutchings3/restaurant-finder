@@ -15,7 +15,7 @@
             
             <form id="js-form">
                 <label for="city-search">City:</label>
-                <input type="text" name="city-search" id="js-city-search" placeholder="Fort Worth" required>
+                <input type="text" name="city-search" id="js-city-search" placeholder="Fort Worth"required>
                 
                 <label for="max-results">Maximum results</label>
                 <input type="number" name="limit" id="js-limit" value="5">
@@ -24,10 +24,20 @@
             </form>
                 
             <p id="js-error-message" class="error-message"></p>
+
             <section id="results" class="hidden">
                 <h2>Eateries nearby:</h2>
-                <ul id="results-list">
-                </ul>
+                <ul id="results-list"></ul>
+            </section>
+
+            <section id="restaurant-map" class="hidden" >
+              <h2 id="restaurant-name"></h2>
+              <ul id="restaurant-location" class="restaurant"></ul>
+            </section>
+        
+            <section id="more-venues" class="hidden">
+                <h2>A few similar venues:</h2>
+                <ul id="similar-venues"></ul>
             </section>
         </div>
         <script src="script.js"></script>

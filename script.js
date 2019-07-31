@@ -1,3 +1,4 @@
+
 'use strict';
 
 const CLIENT_ID = '4P45WGM4XDI5K2JV3GRR5TPI524HID1BJ0ESK5LESQN4WIHY'; 
@@ -14,13 +15,13 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-//function to display restaurant results
+//function to display restaurant resualts
 function displayResults(responseJson) {
   console.log(responseJson);
   $('#results-list').empty();
   for (let i = 0; i < responseJson.response.venues.length; i++){
     $('#results-list').append(
-     `<li><button type="submit" class="restaurantChoice" data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" >${responseJson.response.venues[i].name}</button>
+     `<li><button type="submit" class="restaurantChoice" data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" data-name="${responseJson.response.venues[i].name} ">${responseJson.response.venues[i].name}</button>
       <p>${responseJson.response.venues[i].location.address}</p>
       <p>${responseJson.response.venues[i].categories[0].name}</p>
       </li>
@@ -29,22 +30,22 @@ function displayResults(responseJson) {
 };
 
 //function for restaurant selected to pull up directions and similar venues
-function watchSection(findIdURL, mapURL) {
-location.assign('https://dhutchings3.github.io/restaurant-finder/index');
+function watchSection() {
     $('section').on('click','.restaurantChoice', function (event) {
-      event.preventDefault();
-      $("#results").empty();
+      event.preventDefault(findIdURL, mapURL);
       const venueId = $(this).attr('data-id');
       const venueAddress = $(this).attr('data-filter');
+      const venueName = $(this).attr('data-name');
       console.log(venueId);
       console.log(venueAddress);
+      console.log(venueName);
       const secondURL = findIdURL.replace('{restaurantId}', venueId);
       const newMapURL = mapURL.replace('{restaurantAddress}', venueAddress);
       console.log(secondURL);
       getVenueInfo(venueId, secondURL);
      let updatedMapURL = newMapURL.replace(/ /g,'+');
      console.log(updatedMapURL);
-     getRestaurantLocationMap(updatedMapURL);
+    getRestaurantLocationMap(updatedMapURL, venueName);
     });
 };
 
@@ -62,14 +63,15 @@ function getSimilarVenues(responseJson) {
 };
 
 //function to add google map with location of restaurant clicked
-function getRestaurantLocationMap(updatedMapURL) {
-    console.log('removed');
-    $('#restaurant-location').append(
-      `<iframe width="600" height="450" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
-      </iframe>`
-    );
-   $('#restaurant-map').removeClass('hidden');
-  };
+function getRestaurantLocationMap(updatedMapURL, venueName) {
+  console.log('removed');
+  $('#restaurant-name').append(venueName + ` Location:`);
+  $('#restaurant-location').append(
+    `<iframe width="400" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
+    </iframe>`
+  );
+ $('#restaurant-map').removeClass('hidden');
+};
 
 //function to pull restaurants based off of city input
 function getRestaurantList(query, limit) {
@@ -137,7 +139,6 @@ function getVenueInfo(venueId, secondURL) {
 
 //function for intial submit 
 function watchForm() {
-location.assign('https://dhutchings3.github.io/restaurant-finder/index');
   $('form').submit(event => {
     event.preventDefault();
     const citySearch = $('#js-city-search').val();
