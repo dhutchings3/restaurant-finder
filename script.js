@@ -42,7 +42,6 @@ function watchSection() {
       getVenueInfo(venueId, secondURL);
      let updatedMapURL = newMapURL.replace(/ /g,'+');
      console.log(updatedMapURL);
-    getRestaurantLocationMap(updatedMapURL);
     location.replace('https://dhutchings3.github.io/restaurant-finder/restaurants');
     });
 };
