@@ -19,6 +19,10 @@ function formatQueryParams(params) {
 function displayResults(responseJson) {
   console.log(responseJson);
   $('#results-list').empty();
+  $('#similar-venues').empty();
+  $('#more-venues').addClass('hidden');
+  $('#restaurant-location').empty();
+  $('#restaurant-map').addClass('hidden');
   for (let i = 0; i < responseJson.response.venues.length; i++){
     $('#results-list').append(
      `<li><button type="submit" class="restaurantChoice" data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" data-name="${responseJson.response.venues[i].name} ">${responseJson.response.venues[i].name}</button>
@@ -64,8 +68,8 @@ function getSimilarVenues(responseJson) {
 
 //function to add google map with location of restaurant clicked
 function getRestaurantLocationMap(updatedMapURL, venueName) {
-  console.log('removed');
-  $('#restaurant-name').append(venueName + ` Location:`);
+  $('#restaurant-name').text("");
+  $('#restaurant-name').text(venueName + ` Location:`);
   $('#restaurant-location').append(
     `<iframe width="400" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
     </iframe>`
