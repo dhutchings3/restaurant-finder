@@ -28,8 +28,8 @@ function displayResults(responseJson) {
   for (let i = 0; i < responseJson.response.venues.length; i++){
     $('#results-list').append(
      `<li><button type="submit" class="restaurantChoice" id="resChoice "data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" data-name="${responseJson.response.venues[i].name} ">${responseJson.response.venues[i].name}</button>
-      <p>${responseJson.response.venues[i].location.address}</p>
-      <p>${responseJson.response.venues[i].categories[0].name}</p>
+      <p class="address">${responseJson.response.venues[i].location.address}</p>
+      <p class="categories">${responseJson.response.venues[i].categories[0].name}</p>
       </li>
     `)};
   $('#results').removeClass('hidden');
@@ -64,8 +64,8 @@ function getSimilarVenues(responseJson) {
     for (let i = 0; i < responseJson.response.similarVenues.items.length; i++){
     $('#similar-venues').append(
        `<li><button class="similarVenueChoice" id="simVenChoice" data-id="${responseJson.response.similarVenues.items[i].location.address},${responseJson.response.similarVenues.items[i].location.city}+${responseJson.response.similarVenues.items[i].location.state}" data-name="${responseJson.response.similarVenues.items[i].name}">${responseJson.response.similarVenues.items[i].name}</button>
-       <p>${responseJson.response.similarVenues.items[i].location.address}</p>
-       <p>${responseJson.response.similarVenues.items[i].categories[0].name}</p></li>
+       <p class="address">${responseJson.response.similarVenues.items[i].location.address}</p>
+       <p class="categories">${responseJson.response.similarVenues.items[i].categories[0].name}</p></li>
       `)};
     $('#more-venues').removeClass('hidden');
     $('#more-venues').addClass('backdrop');

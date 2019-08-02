@@ -13,7 +13,7 @@
   }
 
   .container {
-    max-width: 400px;
+    max-width: 300px;
     margin: 0 auto;
   }
   
@@ -45,7 +45,7 @@
     box-decoration-break: clone;
   }
 
-  h2, p, h3, input text{
+  h2, h3, input text {
     font-size: 18px;
   }
 
@@ -135,7 +135,17 @@ section restaurant-map {
       display: inline-block;
   }
 
+p {
+    font-size: 14px;
+}
 
+#restaurant-map {
+    max-width: 450px;
+}
+
+#more-venues {
+    max-width: 300px;
+}
 
   /** slider styleing ***/
   .slidecontainer {
@@ -179,7 +189,7 @@ section restaurant-map {
     h1{ 
         font-size: 40px;
     }
-    h2, p, h3{
+    h2, h3{
         font-size: 18px;
    }
    #js-form {
@@ -193,7 +203,9 @@ section restaurant-map {
 
     #more-venues {
         float: right;
-        clear: left;
+        width: 50%;
     }
+
+
 
 }
