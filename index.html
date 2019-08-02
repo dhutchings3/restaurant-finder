@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Restaurant Finder</title>
         <link href="style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Roboto:400"/>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Poppins&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     </head>
@@ -14,14 +15,39 @@
             <h1>Food near you:</h1>
             
             <form id="js-form">
-                <label for="city-search">City:</label>
-                <input type="text" name="city-search" id="js-city-search" placeholder="Fort Worth"required>
+                <label for="city-search" class="city">City:</label>
+                <input type="text" name="city-search" id="js-city-search" placeholder="Fort Worth, TX"required>
+
+                <label for="category-food" class="category">Food Type:</label>
+                <select id="js-category-food">
+                        <option value="4bf58dd8d48988d14e941735">American</option>
+                        <option value="4bf58dd8d48988d145941735">Chinese</option>
+                        <option value="4bf58dd8d48988d1c1941735">Mexican</option>
+                        <option value="4bf58dd8d48988d110941735">Italian</option>
+                        <option value="4bf58dd8d48988d1ca941735">Pizza</option>
+                        <option value="4bf58dd8d48988d14f941735">Southern</option>
+                        <option value="4bf58dd8d48988d1be941735">Latin American</option>
+                        <option value="4bf58dd8d48988d10f941735">Indian</option>
+                        <option value="4bf58dd8d48988d1be941735">Latin American</option>
+                        <option value="4bf58dd8d48988d10e941735">Greek</option>
+                        <option value="4bf58dd8d48988d147941735">Diner</option>
+                        <option value="4bf58dd8d48988d146941735">Deli</option>
+                        <option value="4bf58dd8d48988d1e0931735">Coffee Shop</option>
+                        <option value="4bf58dd8d48988d16e941735">Fast Food</option>
+                </select>
+
+                <div class="slidecontainer">
+                <label>Value: <span id="demo"></span></label>
+                <input type="range" min="1" max="10" value="4" class="slider" id="js-limit">
+                </div>
                 
-                <label for="max-results">Maximum results</label>
-                <input type="number" name="limit" id="js-limit" value="5">
-                    
-                <input type="submit" class="find-restaurants" value="Find Restaurants!">
+
+                <button class="button"><span>Find Restaurants!</span></button>
+
             </form>
+
+
+            
                 
             <p id="js-error-message" class="error-message"></p>
 
@@ -44,4 +70,3 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </body>
 </html>
-
