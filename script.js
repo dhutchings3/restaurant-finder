@@ -63,7 +63,7 @@ function getSimilarVenues(responseJson) {
     $('#results').addClass('hidden')
     for (let i = 0; i < responseJson.response.similarVenues.items.length; i++){
     $('#similar-venues').append(
-       `<li><button class="similarVenueChoice" id="simVenChoice">${responseJson.response.similarVenues.items[i].name}</button>
+       `<li><button class="similarVenueChoice" id="simVenChoice" data-id="${responseJson.response.similarVenues.items[i].location.address},${responseJson.response.similarVenues.items[i].location.city}+${responseJson.response.similarVenues.items[i].location.state}" data-name="${responseJson.response.similarVenues.items[i].name}">${responseJson.response.similarVenues.items[i].name}</button>
        <p>${responseJson.response.similarVenues.items[i].location.address}</p>
        <p>${responseJson.response.similarVenues.items[i].categories[0].name}</p></li>
       `)};
@@ -71,17 +71,51 @@ function getSimilarVenues(responseJson) {
     $('#more-venues').addClass('backdrop');
 };
 
+//function for similar results directions
+function watchSimilarResults() {
+    $('section').on('click','.similarVenueChoice', function (event) {
+      event.preventDefault();
+      const similarVenueAddress = $(this).attr('data-id');
+      const similarVenueName = $(this).attr('data-name');
+      console.log(similarVenueAddress);
+      console.log(similarVenueName);
+      const anotherMapURL = mapURL.replace('{restaurantAddress}', similarVenueAddress);
+     let similarMapURL = anotherMapURL.replace(/ /g,'+');
+     console.log(similarMapURL);
+    getSimilarRestaurantLocationMap(similarMapURL, similarVenueName);
+    });
+};
+
+
+
 //function to add google map with location of restaurant clicked
 function getRestaurantLocationMap(updatedMapURL, venueName) {
-  $('#restaurant-name').text("");
-  $('#restaurant-name').text(venueName + ` Location:`);
-  $('#restaurant-location').append(
-    `<iframe width="400" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
-    </iframe>`
-  );
- $('#restaurant-map').removeClass('hidden');
- $('#restaurant-map').addClass('backdrop');
+    $('#restaurant-name').text("");
+    $('#restaurant-name').text(venueName + ` Location:`);
+    $('#restaurant-location').append(
+        `<iframe width="400" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
+        </iframe>`
+    );
+    $('#restaurant-map').removeClass('hidden');
+    $('#restaurant-map').addClass('backdrop');
 };
+
+
+//function to add google map with similar venue location clicked
+function getSimilarRestaurantLocationMap(similarMapURL, similarVenueName) {
+    $('#restaurant-location').empty();
+    $('#restaurant-map').addClass('hidden');
+    $('#restaurant-map').removeClass('backdrop');
+    $('#restaurant-name').text("");
+    $('#restaurant-name').text(similarVenueName + ` Location:`);
+    $('#restaurant-location').append(
+      `<iframe width="400" height="250" frameborder="0" style="border:0" src=${similarMapURL}" allowfullscreen>;
+      </iframe>`
+    );
+   $('#restaurant-map').removeClass('hidden');
+   $('#restaurant-map').addClass('backdrop');
+};
+
 
 //function to pull restaurants based off of city input
 function getRestaurantList(query, limit, foodType) {
@@ -172,3 +206,4 @@ slider.oninput = function() {
 
 $(watchForm);
 $(watchSection);
+$(watchSimilarResults);
