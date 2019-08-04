@@ -17,7 +17,6 @@ function formatQueryParams(params) {
 
 //function to display restaurant results from user input
 function displayResults(responseJson) {
-  console.log(responseJson);
   $('#js-switch-type').empty();
   $('#js-switch-type').removeClass('backdrop');
   $('#results-list').empty();
@@ -46,22 +45,16 @@ function watchSection() {
       const venueId = $(this).attr('data-id');
       const venueAddress = $(this).attr('data-filter');
       const venueName = $(this).attr('data-name');
-      console.log(venueId);
-      console.log(venueAddress);
-      console.log(venueName);
       const secondURL = findIdURL.replace('{restaurantId}', venueId);
       const newMapURL = mapURL.replace('{restaurantAddress}', venueAddress);
-      console.log(secondURL);
       getVenueInfo(venueId, secondURL);
      let updatedMapURL = newMapURL.replace(/ /g,'+');
-     console.log(updatedMapURL);
     getRestaurantLocationMap(updatedMapURL, venueName);
     });
 };
 
 //function to show similar venues based on restaurant chosen
 function getSimilarVenues(responseJson) {
-    console.log(responseJson);
     $('#js-switch-type').empty();
     $('#js-switch-type').removeClass('backdrop');
     $('#results').addClass('hidden')
@@ -81,15 +74,11 @@ function watchSimilarResults() {
       event.preventDefault();
       const similarVenueAddress = $(this).attr('data-id');
       const similarVenueName = $(this).attr('data-name');
-      console.log(similarVenueAddress);
-      console.log(similarVenueName);
       const anotherMapURL = mapURL.replace('{restaurantAddress}', similarVenueAddress);
      let similarMapURL = anotherMapURL.replace(/ /g,'+');
-     console.log(similarMapURL);
     getSimilarRestaurantLocationMap(similarMapURL, similarVenueName);
     });
 };
-
 
 
 //function to add google map of location of selected restaurant
@@ -136,8 +125,6 @@ function getRestaurantList(query, limit, foodType) {
   const queryString = formatQueryParams(params)
   const url = restaurantURL + '?' + queryString;
 
-  console.log(url);
-
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -179,8 +166,6 @@ function getVenueInfo(venueId, secondURL) {
   const queryString = formatQueryParams(venueParams)
   const newUrl = secondURL + '?' + queryString;
 
-  console.log(newUrl);
-
   fetch(newUrl)
     .then(response => {
       if (response.ok) {
@@ -204,7 +189,6 @@ function watchForm() {
     const citySearch = $('#js-city-search').val();
     const limit = $('#js-limit').val();
     const foodType = $('#js-category-food').val();
-    console.log(foodType);
     getRestaurantList(citySearch, limit, foodType);
   });
 }
