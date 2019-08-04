@@ -20,24 +20,24 @@
 
                 <label for="category-food" class="category">Restaurant Type:</label>
                 <select id="js-category-food">
-                        <option value="4bf58dd8d48988d14e941735">American</option>
-                        <option value="4bf58dd8d48988d145941735">Chinese</option>
-                        <option value="4bf58dd8d48988d1c1941735">Mexican</option>
-                        <option value="4bf58dd8d48988d110941735">Italian</option>
-                        <option value="4bf58dd8d48988d1ca941735">Pizza</option>
-                        <option value="4bf58dd8d48988d14f941735">Southern</option>
-                        <option value="4bf58dd8d48988d1be941735">Latin American</option>
-                        <option value="4bf58dd8d48988d10f941735">Indian</option>
-                        <option value="4bf58dd8d48988d10e941735">Greek</option>
-                        <option value="4bf58dd8d48988d147941735">Diner</option>
-                        <option value="4bf58dd8d48988d146941735">Deli</option>
-                        <option value="4bf58dd8d48988d1e0931735">Coffee Shop</option>
-                        <option value="4bf58dd8d48988d16e941735">Fast Food</option>
+                    <option value="4bf58dd8d48988d14e941735">American</option>
+                    <option value="4bf58dd8d48988d145941735">Chinese</option>
+                    <option value="4bf58dd8d48988d1c1941735">Mexican</option>
+                    <option value="4bf58dd8d48988d110941735">Italian</option>
+                    <option value="4bf58dd8d48988d1ca941735">Pizza</option>
+                    <option value="4bf58dd8d48988d14f941735">Southern</option>
+                    <option value="4bf58dd8d48988d1be941735">Latin American</option>
+                    <option value="4bf58dd8d48988d10f941735">Indian</option>
+                    <option value="4bf58dd8d48988d10e941735">Greek</option>
+                    <option value="4bf58dd8d48988d147941735">Diner</option>
+                    <option value="4bf58dd8d48988d146941735">Deli</option>
+                    <option value="4bf58dd8d48988d1e0931735">Coffee Shop</option>
+                    <option value="4bf58dd8d48988d16e941735">Fast Food</option>
                 </select>
 
                 <div class="slidecontainer">
-                <label>Number of options: <span id="demo"></span></label>
-                <input type="range" min="1" max="10" value="4" class="slider" id="js-limit">
+                    <label>Number of options: <span id="demo"></span></label>
+                    <input type="range" min="1" max="10" value="4" class="slider" id="js-limit">
                 </div>
 
                 <button class="button"><span>Find Restaurants!</span></button>
@@ -46,15 +46,16 @@
 
                 
             <p id="js-error-message" class="error-message"></p>
+            <p id="js-switch-type" class="try-again-message"></p>
 
             <section id="results" class="hidden">
-                <h2>Eateries nearby:</h2>
+                <h2 id="eateries-title">Eateries nearby:</h2>
                 <ul id="results-list"></ul>
             </section>
 
             <section id="restaurant-map" class="hidden" >
-              <h2 id="restaurant-name"></h2>
-              <ul id="restaurant-location" class="restaurant"></ul>
+                <h2 id="restaurant-name"></h2>
+                <ul id="restaurant-location" class="restaurant"></ul>
             </section>
         
             <section id="more-venues" class="hidden">
@@ -66,3 +67,4 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </body>
 </html>
+
