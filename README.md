@@ -15,10 +15,16 @@ Technology Used:
 Screenshots:
 
 Landing Page:
-![alt text](landing-page.png)
+<img src="landing-page.png"
+     alt="landing page screenshot"
+     style="float: left; margin-right: 10px;" />
 
 Restaurant Recommendations:
-![alt text](https://github.com/dhutchings3/restaurant-finder/master/results.png)
+<img src="results.png"
+     alt="landing page screenshot"
+     style="float: left; margin-right: 10px;" />
 
 Similar Recommendations & Map:
-![alt text](https://github.com/dhutchings3/restaurant-finder/master/similar-results.png)
+<img src="similar-results.png"
+     alt="landing page screenshot"
+     style="float: left; margin-right: 10px;" />
