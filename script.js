@@ -18,8 +18,8 @@ function formatQueryParams(params) {
 //function to display restaurant results from user input
 function displayResults(responseJson) {
   console.log(responseJson);
-  $('#eateries-title').removeClass('hidden');
   $('#js-switch-type').empty();
+  $('#js-switch-type').removeClass('backdrop');
   $('#results-list').empty();
   $('#similar-venues').empty();
   $('#more-venues').addClass('hidden');
@@ -62,6 +62,8 @@ function watchSection() {
 //function to show similar venues based on restaurant chosen
 function getSimilarVenues(responseJson) {
     console.log(responseJson);
+    $('#js-switch-type').empty();
+    $('#js-switch-type').removeClass('backdrop');
     $('#results').addClass('hidden')
     for (let i = 0; i < responseJson.response.similarVenues.items.length; i++){
     $('#similar-venues').append(
@@ -148,8 +150,15 @@ function getRestaurantList(query, limit, foodType) {
         displayResults(responseJson);
         }
         else {
-          $('#results-list').empty('hidden');
-          $('#eateries-title').addClass('hidden');
+          $('#results').addClass('hidden');
+          $('#results').removeClass('backdrop');
+          $('#similar-venues').empty();
+          $('#more-venues').addClass('hidden');
+          $('#more-venues').removeClass('backdrop');
+          $('#restaurant-location').empty();
+          $('#restaurant-map').addClass('hidden');
+          $('#restaurant-map').removeClass('backdrop');
+          $('#js-switch-type').addClass('backdrop');
           $('#js-switch-type').text(`Currently there are no restuarants in that category avaialble, please select another Restaurant Type.`);
         }
     })
