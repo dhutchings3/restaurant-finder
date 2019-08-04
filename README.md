@@ -15,9 +15,9 @@ Technology Used:
 Screenshots:
 
 Landing Page:
-<img src="landing-page.png"
-     alt="landing page screenshot"
-     style="float: left; margin-right: 10px;" />
+
+![alt text](https://github.com/dhutchings3/restaurant-finder/blob/master/hero-image.jpg "Logo Title Text 1")
+
 
 Restaurant Recommendations:
 <img src="results.png"
