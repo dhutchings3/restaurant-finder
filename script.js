@@ -8,16 +8,18 @@ const findIdURL = 'https://api.foursquare.com/v2/venues/{restaurantId}/similar';
 const mapURL = 'https://www.google.com/maps/embed/v1/search?key=AIzaSyDAbBrbxCR1_a-0KNJ6VaSRxjq_5OytLPs&q={restaurantAddress}';
 
 
-//function to build web friendly query search to add to end of url
+//function to add query parameters to end of url
 function formatQueryParams(params) {
   const queryItems = Object.keys(params)
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
   return queryItems.join('&');
 }
 
-//function to display restaurant resualts
+//function to display restaurant results from user input
 function displayResults(responseJson) {
   console.log(responseJson);
+  $('#eateries-title').removeClass('hidden');
+  $('#js-switch-type').empty();
   $('#results-list').empty();
   $('#similar-venues').empty();
   $('#more-venues').addClass('hidden');
@@ -27,16 +29,16 @@ function displayResults(responseJson) {
   $('#restaurant-map').removeClass('backdrop');
   for (let i = 0; i < responseJson.response.venues.length; i++){
     $('#results-list').append(
-     `<li><button type="submit" class="restaurantChoice" id="resChoice "data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" data-name="${responseJson.response.venues[i].name} ">${responseJson.response.venues[i].name}</button>
-      <p class="address">${responseJson.response.venues[i].location.address}</p>
+     `<li><button class="restaurantChoice" id="restSelect" "type="submit" data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" data-name="${responseJson.response.venues[i].name} "><p id="resChoice">${responseJson.response.venues[i].name}</p>
+      <p class="address">${responseJson.response.venues[i].location.formattedAddress}</p>
       <p class="categories">${responseJson.response.venues[i].categories[0].name}</p>
-      </li>
+      </button></li>
     `)};
   $('#results').removeClass('hidden');
   $('#results').addClass('backdrop');
 };
 
-//function for restaurant selected to pull up directions and similar venues
+//function for when user selects restaurant to pull up map and similar venues
 function watchSection() {
     $('section').on('click','.restaurantChoice', function (event) {
       event.preventDefault(findIdURL, mapURL);
@@ -63,15 +65,15 @@ function getSimilarVenues(responseJson) {
     $('#results').addClass('hidden')
     for (let i = 0; i < responseJson.response.similarVenues.items.length; i++){
     $('#similar-venues').append(
-       `<li><button class="similarVenueChoice" id="simVenChoice" data-id="${responseJson.response.similarVenues.items[i].location.address},${responseJson.response.similarVenues.items[i].location.city}+${responseJson.response.similarVenues.items[i].location.state}" data-name="${responseJson.response.similarVenues.items[i].name}">${responseJson.response.similarVenues.items[i].name}</button>
-       <p class="address">${responseJson.response.similarVenues.items[i].location.address}</p>
-       <p class="categories">${responseJson.response.similarVenues.items[i].categories[0].name}</p></li>
+       `<li><button class="similarVenueChoice" type="submit" data-id="${responseJson.response.similarVenues.items[i].location.address},${responseJson.response.similarVenues.items[i].location.city}+${responseJson.response.similarVenues.items[i].location.state}" data-name="${responseJson.response.similarVenues.items[i].name}"><p id="simVenChoice">${responseJson.response.similarVenues.items[i].name}</p>
+       <p class="address">${responseJson.response.similarVenues.items[i].location.formattedAddress}</p>
+       <p class="categories">${responseJson.response.similarVenues.items[i].categories[0].name}</p></button></li>
       `)};
     $('#more-venues').removeClass('hidden');
     $('#more-venues').addClass('backdrop');
 };
 
-//function for similar results directions
+//function to watch for click on similar venue to pull up similar restaurant venue map
 function watchSimilarResults() {
     $('section').on('click','.similarVenueChoice', function (event) {
       event.preventDefault();
@@ -88,12 +90,12 @@ function watchSimilarResults() {
 
 
 
-//function to add google map with location of restaurant clicked
+//function to add google map of location of selected restaurant
 function getRestaurantLocationMap(updatedMapURL, venueName) {
     $('#restaurant-name').text("");
     $('#restaurant-name').text(venueName + ` Location:`);
     $('#restaurant-location').append(
-        `<iframe width="400" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
+        `<iframe width="280" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
         </iframe>`
     );
     $('#restaurant-map').removeClass('hidden');
@@ -101,7 +103,7 @@ function getRestaurantLocationMap(updatedMapURL, venueName) {
 };
 
 
-//function to add google map with similar venue location clicked
+//function to add google map of selected similar restaurant venue
 function getSimilarRestaurantLocationMap(similarMapURL, similarVenueName) {
     $('#restaurant-location').empty();
     $('#restaurant-map').addClass('hidden');
@@ -109,7 +111,7 @@ function getSimilarRestaurantLocationMap(similarMapURL, similarVenueName) {
     $('#restaurant-name').text("");
     $('#restaurant-name').text(similarVenueName + ` Location:`);
     $('#restaurant-location').append(
-      `<iframe width="400" height="250" frameborder="0" style="border:0" src=${similarMapURL}" allowfullscreen>;
+      `<iframe width="280" height="250" frameborder="0" style="border:0" src=${similarMapURL}" allowfullscreen>;
       </iframe>`
     );
    $('#restaurant-map').removeClass('hidden');
@@ -117,7 +119,7 @@ function getSimilarRestaurantLocationMap(similarMapURL, similarVenueName) {
 };
 
 
-//function to pull restaurants based off of city input
+//requesting restaurant data from api
 function getRestaurantList(query, limit, foodType) {
   const params = {
     client_id: CLIENT_ID,
@@ -129,28 +131,34 @@ function getRestaurantList(query, limit, foodType) {
     categoryId: foodType,
   };
 
-  //building url with search query
   const queryString = formatQueryParams(params)
   const url = restaurantURL + '?' + queryString;
 
   console.log(url);
 
-  //requesting data from api
   fetch(url)
     .then(response => {
       if (response.ok) {
-        return response.json();
+      return response.json();
       }
       throw new Error(response.statusText);
     })
     .then(responseJson => {
+        if (responseJson.response.venues.length > 1) {
         displayResults(responseJson);
+        }
+        else {
+          $('#results-list').empty('hidden');
+          $('#eateries-title').addClass('hidden');
+          $('#js-switch-type').text(`Currently there are no restuarants in that category avaialble, please select another Restaurant Type.`);
+        }
     })
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
 
+//requesting similar restaurant data from api
 function getVenueInfo(venueId, secondURL) {
   const venueParams = {
     client_id: CLIENT_ID,
@@ -164,7 +172,6 @@ function getVenueInfo(venueId, secondURL) {
 
   console.log(newUrl);
 
-    //requesting more data from api
   fetch(newUrl)
     .then(response => {
       if (response.ok) {
@@ -194,7 +201,7 @@ function watchForm() {
 }
 
 
-//slider javascript
+//slider
 var slider = document.getElementById("js-limit");
 var output = document.getElementById("demo");
 output.innerHTML = slider.value;
