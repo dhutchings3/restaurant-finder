@@ -15,7 +15,7 @@ Technology Used:
 Screenshots:
 
 Landing Page:
-![alt text](https://github.com/dhutchings3/restaurant-finder/master/landing-page.png)
+![alt text](landing-page.png)
 
 Restaurant Recommendations:
 ![alt text](https://github.com/dhutchings3/restaurant-finder/master/results.png)
