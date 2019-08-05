@@ -17,6 +17,10 @@ function formatQueryParams(params) {
 
 //function to display restaurant results from user input
 function displayResults(responseJson) {
+  $('#js-error-message').empty();
+  $('#js-error-message').removeClass('backdrop');
+  $('#js-similar-result-list').empty();
+  $('#js-similar-result-list').removeClass('backdrop');
   $('#js-switch-type').empty();
   $('#js-switch-type').removeClass('backdrop');
   $('#results-list').empty();
@@ -55,6 +59,8 @@ function watchSection() {
 
 //function to show similar venues based on restaurant chosen
 function getSimilarVenues(responseJson) {
+    $('#js-similar-result-list').empty();
+    $('#js-similar-result-list').removeClass('backdrop');
     $('#js-switch-type').empty();
     $('#js-switch-type').removeClass('backdrop');
     $('#results').addClass('hidden')
@@ -137,6 +143,8 @@ function getRestaurantList(query, limit, foodType) {
         displayResults(responseJson);
         }
         else {
+          $('#js-similar-result-list').empty();
+          $('#js-similar-result-list').removeClass('backdrop');
           $('#results').addClass('hidden');
           $('#results').removeClass('backdrop');
           $('#similar-venues').empty();
@@ -150,7 +158,18 @@ function getRestaurantList(query, limit, foodType) {
         }
     })
     .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        $('#js-similar-result-list').empty();
+        $('#js-similar-result-list').removeClass('backdrop');
+        $('#results').addClass('hidden');
+        $('#results').removeClass('backdrop');
+        $('#similar-venues').empty();
+        $('#more-venues').addClass('hidden');
+        $('#more-venues').removeClass('backdrop');
+        $('#restaurant-location').empty();
+        $('#restaurant-map').addClass('hidden');
+        $('#restaurant-map').removeClass('backdrop');
+        
+        $('#js-error-message').text(`Please check your connection: ${err.message}`);
     });
 }
 
@@ -169,17 +188,39 @@ function getVenueInfo(venueId, secondURL) {
   fetch(newUrl)
     .then(response => {
       if (response.ok) {
-        return response.json();
+      return response.json();
       }
       throw new Error(response.statusText);
     })
     .then(responseJson => {
+        if (responseJson.response.similarVenues.items.length > 1) {
         getSimilarVenues(responseJson);
+        }
+        else {
+        $('#results').addClass('hidden');
+        $('#results').removeClass('backdrop');
+        $('#similar-venues').empty();
+        $('#more-venues').addClass('hidden');
+        $('#more-venues').removeClass('backdrop');
+        $('#js-similar-result-list').addClass('backdrop');    
+        $('#js-similar-result-list').text(`Currently there are no similar restuarants in the selected city.`);
+        }
+    
     })
-    .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
-    });
-}
+    .catch(err => { 
+        $('#js-similar-result-list').empty();
+        $('#js-similar-result-list').removeClass('backdrop');
+        $('#results').addClass('hidden');
+        $('#results').removeClass('backdrop');
+        $('#similar-venues').empty();
+        $('#more-venues').addClass('hidden');
+        $('#more-venues').removeClass('backdrop');
+        $('#restaurant-location').empty();
+        $('#restaurant-map').addClass('hidden');
+        $('#restaurant-map').removeClass('backdrop');
+        $('#js-error-message').text(`Please check your connection: ${err.message}`);
+    })
+};
 
 
 //function for intial submit 

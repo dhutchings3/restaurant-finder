@@ -26,13 +26,13 @@ body {
 
 /**** First Page ***/
   
-header {
+h1 {
       margin-bottom: 0px;
       font-size: 24px;
       width: 300px;
 }
 
-header, form, .backdrop {
+h1, form, .backdrop {
     background-color: rgba(255, 255, 255, 0.75);
     color: black;
     display: inline-block;
@@ -43,7 +43,7 @@ header, form, .backdrop {
 }
 
 .error-message {
-    color: red;
+    color: black;
 }
 
 #js-city-search {
@@ -66,6 +66,12 @@ label .class, input {
 
 #results {
     width: 300px;
+}
+
+#js-category-food {
+    border: 1px black solid;
+    height: 20px;
+    width: 100px;
 }
 
 button {
@@ -230,7 +236,7 @@ ul {
         font-size: 18px;
     }
         
-    header { 
+    h1 { 
         font-size: 40px;
         width: 700px;
     }
@@ -239,7 +245,7 @@ ul {
         font-size: 18px;
     }
 
-    header, form, .backdrop {
+    h1, form, .backdrop {
         padding: 10px 25px;
     }
         
