@@ -244,11 +244,21 @@ ul {
 
     body {
         font-size: 18px;
+        margin-right: 0;
+        margin-left: 0;
     }
         
     h1 { 
         font-size: 40px;
-        width: 700px;
+        width: 800px;
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .about {
+        width: 800px;
+        margin-right: 0;
+        margin-left: 0;
     }
         
     h2, h3{
@@ -264,7 +274,9 @@ ul {
     }
         
     #js-form {
-        width: 700px;
+        width: 800px;
+        margin-right: 0;
+        margin-left: 0;
     }   
 
     .category {
@@ -282,6 +294,8 @@ ul {
         width: 800px;
         margin-top: 0px;
         padding: 10px;
+        margin-right: 0;
+        margin-left: 0;
     }
 
     ul li {
@@ -300,15 +314,17 @@ ul {
     #more-venues {
         float: right;
         width: 50%;
-        width: 275px;
+        width: 330px;
+        margin-top: 0px;
     }
 
     #location {
-        width: 700px;
+        width: 800px;
     }
 
     ul#similar-venues {
         margin: 0px 0px;
+        text-align: center;
     }
 
     iframe {
@@ -317,6 +333,13 @@ ul {
     }
 
     #restaurant-map {
-        width: 400px;
+        width: 450px;
+        margin-top: 0;
+        text-align: center;
     }
+
+    #restaurant-name {
+        text-align: left;
+    }
+
 }

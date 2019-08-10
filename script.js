@@ -59,7 +59,7 @@ function getSimilarVenues(responseJson) {
   for (let i = 0; i < responseJson.response.similarVenues.items.length; i++) {
     $('#similar-venues').append(
       `<li><button class="similarVenueChoice" type="submit" data-id="${responseJson.response.similarVenues.items[i].location.address},${responseJson.response.similarVenues.items[i].location.city}+${responseJson.response.similarVenues.items[i].location.state}" data-name="${responseJson.response.similarVenues.items[i].name}"><p id="simVenChoice">${responseJson.response.similarVenues.items[i].name}</p>
-       <p class="address">${responseJson.response.similarVenues.items[i].location.formattedAddress}</p>
+       <p class="address">${responseJson.response.similarVenues.items[i].location.address}, ${responseJson.response.similarVenues.items[i].location.city}, ${responseJson.response.similarVenues.items[i].location.state}</p>
        <p class="categories">${responseJson.response.similarVenues.items[i].categories[0].name}</p></button></li>
       `)
   };
@@ -124,7 +124,7 @@ function getRestaurantList(query, limit, foodType) {
         return response.json();
       }
       console.log(response);
-      $('#js-error-message').addClass('backdrop');
+      $('#js-error-message').empty().addClass('backdrop');
       throw new Error ('There was an error getting your results. Please make sure it was a valid city or try again later.');
     })
     .then(responseJson => {
@@ -137,6 +137,7 @@ function getRestaurantList(query, limit, foodType) {
         $('#more-venues').addClass('hidden').removeClass('backdrop');
         $('#restaurant-location').empty();
         $('#restaurant-map').addClass('hidden').removeClass('backdrop');
+        $('#js-error-message').empty().removeClass('backdrop');
         $('#js-switch-type').addClass('backdrop').text(`Currently there are no restuarants in that category avaialble, please select another Restaurant Type.`);
       }
     })
@@ -147,7 +148,7 @@ function getRestaurantList(query, limit, foodType) {
       $('#more-venues').addClass('hidden').removeClass('backdrop');
       $('#restaurant-location').empty();
       $('#restaurant-map').addClass('hidden').removeClass('backdrop');
-
+      $('#js-switch-type').empty().removeClass('backdrop');
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
@@ -177,6 +178,7 @@ function getVenueInfo(venueId, secondURL) {
       } else {
         $('#results').addClass('hidden').removeClass('backdrop');
         $('#similar-venues').empty();
+        $('#js-error-message').empty().removeClass('backdrop');
         $('#more-venues').addClass('hidden').removeClass('backdrop');
         $('#js-similar-result-list').addClass('backdrop').text(`Currently there are no similar restuarants in the selected city.`);
       }
@@ -189,6 +191,7 @@ function getVenueInfo(venueId, secondURL) {
       $('#more-venues').addClass('hidden').removeClass('backdrop');
       $('#restaurant-location').empty();
       $('#restaurant-map').addClass('hidden').removeClass('backdrop');
+      $('#js-switch-type').empty().removeClass('backdrop');
       $('#js-error-message').text(`Please check your connection: ${err.message}`);
     })
 };
