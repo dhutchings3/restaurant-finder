@@ -15,17 +15,20 @@ Technology Used:
 Screenshots:
 
 Landing Page:
+
 <img src="landing-page.png"
      alt="landing page screenshot"
      style="float: left; margin-right: 10px;" />
 
 
 Restaurant Recommendations:
+
 <img src="results.png"
      alt="Results page screenshot"
      style="float: left; margin-right: 10px;" />
 
 Similar Recommendations & Map:
+
 <img src="similar-results.png"
      alt="Similar results page screenshot"
      style="float: left; margin-right: 10px;" />
