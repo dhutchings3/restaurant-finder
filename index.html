@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width" initial-scale="1.0">
+        <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Restaurant Finder</title>
         <link href="style.css" rel="stylesheet" type="text/css" />
@@ -13,12 +13,13 @@
     <body>
         <div class="container" id="location">
             <h1>Food near you:</h1>
+            <p class="about">Search a city below to find local restaurants, similar restaurants and a map of their location!</p>
             
             <form id="js-form">
-                <label for="city-search" class="city">City:</label>
+                <label for="js-city-search" class="city">City:</label>
                 <input type="text" name="city-search" id="js-city-search" placeholder="Fort Worth, TX" required>
 
-                <label for="category-food" class="category">Restaurant Type:</label>
+                <label for="js-category-food" class="category" >Restaurant Type:</label>
                 <select id="js-category-food">
                     <option value="4bf58dd8d48988d14e941735">American</option>
                     <option value="4bf58dd8d48988d145941735">Chinese</option>
@@ -36,7 +37,7 @@
                 </select>
 
                 <div class="slidecontainer">
-                    <label>Number of options: <span id="demo"></span></label>
+                    <label for="js-limit">Number of options: <span id="limit-slider"></span></label>
                     <input type="range" min="2" max="10" value="4" class="slider" id="js-limit">
                 </div>
 
@@ -55,7 +56,7 @@
             </section>
 
             <section id="restaurant-map" class="hidden" >
-                <h2 id="restaurant-name"></h2>
+                <h2 id="restaurant-name">Restaurant</h2>
                 <ul id="restaurant-location" class="restaurant"></ul>
             </section>
         
@@ -68,4 +69,3 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </body>
 </html>
-

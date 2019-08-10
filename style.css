@@ -32,7 +32,7 @@ h1 {
       width: 300px;
 }
 
-h1, form, .backdrop {
+h1, form, .backdrop, .about {
     background-color: rgba(255, 255, 255, 0.75);
     color: black;
     display: inline-block;
@@ -50,6 +50,8 @@ h1, form, .backdrop {
     height: 30px;
     width: 75%;
     border: 1px solid darkgray;
+    padding: 10px;
+    margin-left: 10px;
 }
 
 label .class, input {
@@ -58,6 +60,10 @@ label .class, input {
 
 #js-form {
     width: 300px;
+}
+
+#limit-slider {
+  margin-left: 10px;
 }
 
 #find-button {
@@ -70,8 +76,11 @@ label .class, input {
 
 #js-category-food {
     border: 1px black solid;
-    height: 20px;
-    width: 100px;
+    height: 35px;
+    width: 120px;
+    margin-left: 10px;
+    padding: 5px 5px;
+    font-size: 14px;
 }
 
 button {
@@ -170,7 +179,7 @@ ul {
 
 .address {
     font-size: 14px;
-    max-width: 200px;;
+    max-width: 150px;
     margin: 0 auto;
 }
 
@@ -264,24 +273,24 @@ ul {
     #js-category-food {
         display: inline-block;
         margin-bottom: 20px;
+        height: 40px;
+        width: 200px;
     }
 
     #results {
-        width: 400px;
+        width: 800px;
         margin-top: 0px;
         padding: 10px;
-        margin-left: 150px;
-        margin-right: 150px;
+    }
+
+    ul li {
+      display: inline-block;
     }
         
     .button {
         width: 340px;
     }
 
-    button {
-        width: 230px;
-    }
-    
     .container {
         max-width: 800px;
         margin: 0 auto;

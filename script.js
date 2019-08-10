@@ -1,7 +1,6 @@
-
 'use strict';
 
-const CLIENT_ID = '4P45WGM4XDI5K2JV3GRR5TPI524HID1BJ0ESK5LESQN4WIHY'; 
+const CLIENT_ID = '4P45WGM4XDI5K2JV3GRR5TPI524HID1BJ0ESK5LESQN4WIHY';
 const CLIENT_SECRET = 'KY3REMBAJCVJWTJSQRP5OZB51FOKTUNOG2AS5CCAQ3T4MSM2';
 const restaurantURL = 'https://api.foursquare.com/v2/venues/search';
 const findIdURL = 'https://api.foursquare.com/v2/venues/{restaurantId}/similar';
@@ -17,102 +16,90 @@ function formatQueryParams(params) {
 
 //function to display restaurant results from user input
 function displayResults(responseJson) {
-  $('#js-error-message').empty();
-  $('#js-error-message').removeClass('backdrop');
-  $('#js-similar-result-list').empty();
-  $('#js-similar-result-list').removeClass('backdrop');
-  $('#js-switch-type').empty();
-  $('#js-switch-type').removeClass('backdrop');
+  $('#js-error-message').empty().removeClass('backdrop');
+  $('#js-similar-result-list').empty().removeClass('backdrop');
+  $('#js-switch-type').empty().removeClass('backdrop');
   $('#results-list').empty();
   $('#similar-venues').empty();
-  $('#more-venues').addClass('hidden');
-  $('#more-venues').removeClass('backdrop');
+  $('#more-venues').addClass('hidden').removeClass('backdrop');
   $('#restaurant-location').empty();
-  $('#restaurant-map').addClass('hidden');
-  $('#restaurant-map').removeClass('backdrop');
-  for (let i = 0; i < responseJson.response.venues.length; i++){
+  $('#restaurant-map').addClass('hidden').removeClass('backdrop');
+  for (let i = 0; i < responseJson.response.venues.length; i++) {
     $('#results-list').append(
-     `<li><button class="restaurantChoice" id="restSelect" "type="submit" data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" data-name="${responseJson.response.venues[i].name} "><p id="resChoice">${responseJson.response.venues[i].name}</p>
-      <p class="address">${responseJson.response.venues[i].location.formattedAddress}</p>
+      `<li><button class="restaurantChoice" id="restSelect" "type="submit" data-id="${responseJson.response.venues[i].id}" data-filter="${responseJson.response.venues[i].location.address},${responseJson.response.venues[i].location.city}+${responseJson.response.venues[i].location.state}" data-name="${responseJson.response.venues[i].name} "><p id="resChoice">${responseJson.response.venues[i].name}</p>
+      <p class="address">${responseJson.response.venues[i].location.address}, ${responseJson.response.venues[i].location.city}, ${responseJson.response.venues[i].location.state}</p>
       <p class="categories">${responseJson.response.venues[i].categories[0].name}</p>
       </button></li>
-    `)};
-  $('#results').removeClass('hidden');
-  $('#results').addClass('backdrop');
+    `)
+  };
+  $('#results').removeClass('hidden').addClass('backdrop');
 };
 
 //function for when user selects restaurant to pull up map and similar venues
 function watchSection() {
-    $('section').on('click','.restaurantChoice', function (event) {
-      event.preventDefault(findIdURL, mapURL);
-      $('#results').removeClass('backdrop');
-      const venueId = $(this).attr('data-id');
-      const venueAddress = $(this).attr('data-filter');
-      const venueName = $(this).attr('data-name');
-      const secondURL = findIdURL.replace('{restaurantId}', venueId);
-      const newMapURL = mapURL.replace('{restaurantAddress}', venueAddress);
-      getVenueInfo(venueId, secondURL);
-     let updatedMapURL = newMapURL.replace(/ /g,'+');
+  $('section').on('click', '.restaurantChoice', function (event) {
+    event.preventDefault(findIdURL, mapURL);
+    $('#results').removeClass('backdrop');
+    const venueId = $(this).attr('data-id');
+    const venueAddress = $(this).attr('data-filter');
+    const venueName = $(this).attr('data-name');
+    const secondURL = findIdURL.replace('{restaurantId}', venueId);
+    const newMapURL = mapURL.replace('{restaurantAddress}', venueAddress);
+    getVenueInfo(venueId, secondURL);
+    let updatedMapURL = newMapURL.replace(/ /g, '+');
     getRestaurantLocationMap(updatedMapURL, venueName);
-    });
+  });
 };
 
 //function to show similar venues based on restaurant chosen
 function getSimilarVenues(responseJson) {
-    $('#js-similar-result-list').empty();
-    $('#js-similar-result-list').removeClass('backdrop');
-    $('#js-switch-type').empty();
-    $('#js-switch-type').removeClass('backdrop');
-    $('#results').addClass('hidden')
-    for (let i = 0; i < responseJson.response.similarVenues.items.length; i++){
+  $('#js-similar-result-list').empty().removeClass('backdrop');
+  $('#js-switch-type').empty().removeClass('backdrop');
+  $('#results').addClass('hidden')
+  for (let i = 0; i < responseJson.response.similarVenues.items.length; i++) {
     $('#similar-venues').append(
-       `<li><button class="similarVenueChoice" type="submit" data-id="${responseJson.response.similarVenues.items[i].location.address},${responseJson.response.similarVenues.items[i].location.city}+${responseJson.response.similarVenues.items[i].location.state}" data-name="${responseJson.response.similarVenues.items[i].name}"><p id="simVenChoice">${responseJson.response.similarVenues.items[i].name}</p>
+      `<li><button class="similarVenueChoice" type="submit" data-id="${responseJson.response.similarVenues.items[i].location.address},${responseJson.response.similarVenues.items[i].location.city}+${responseJson.response.similarVenues.items[i].location.state}" data-name="${responseJson.response.similarVenues.items[i].name}"><p id="simVenChoice">${responseJson.response.similarVenues.items[i].name}</p>
        <p class="address">${responseJson.response.similarVenues.items[i].location.formattedAddress}</p>
        <p class="categories">${responseJson.response.similarVenues.items[i].categories[0].name}</p></button></li>
-      `)};
-    $('#more-venues').removeClass('hidden');
-    $('#more-venues').addClass('backdrop');
+      `)
+  };
+  $('#more-venues').removeClass('hidden').addClass('backdrop');
 };
 
 //function to watch for click on similar venue to pull up similar restaurant venue map
 function watchSimilarResults() {
-    $('section').on('click','.similarVenueChoice', function (event) {
-      event.preventDefault();
-      const similarVenueAddress = $(this).attr('data-id');
-      const similarVenueName = $(this).attr('data-name');
-      const anotherMapURL = mapURL.replace('{restaurantAddress}', similarVenueAddress);
-     let similarMapURL = anotherMapURL.replace(/ /g,'+');
+  $('section').on('click', '.similarVenueChoice', function (event) {
+    event.preventDefault();
+    const similarVenueAddress = $(this).attr('data-id');
+    const similarVenueName = $(this).attr('data-name');
+    const anotherMapURL = mapURL.replace('{restaurantAddress}', similarVenueAddress);
+    let similarMapURL = anotherMapURL.replace(/ /g, '+');
     getSimilarRestaurantLocationMap(similarMapURL, similarVenueName);
-    });
+  });
 };
 
 
 //function to add google map of location of selected restaurant
 function getRestaurantLocationMap(updatedMapURL, venueName) {
-    $('#restaurant-name').text("");
-    $('#restaurant-name').text(venueName + ` Location:`);
-    $('#restaurant-location').append(
-        `<iframe width="280" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
+  $('#restaurant-name').text("").text(venueName + ` Location:`);
+  $('#restaurant-location').append(
+    `<iframe width="280" height="250" frameborder="0" style="border:0" src=${updatedMapURL}" allowfullscreen>;
         </iframe>`
-    );
-    $('#restaurant-map').removeClass('hidden');
-    $('#restaurant-map').addClass('backdrop');
+  );
+  $('#restaurant-map').removeClass('hidden').addClass('backdrop');
 };
 
 
 //function to add google map of selected similar restaurant venue
 function getSimilarRestaurantLocationMap(similarMapURL, similarVenueName) {
-    $('#restaurant-location').empty();
-    $('#restaurant-map').addClass('hidden');
-    $('#restaurant-map').removeClass('backdrop');
-    $('#restaurant-name').text("");
-    $('#restaurant-name').text(similarVenueName + ` Location:`);
-    $('#restaurant-location').append(
-      `<iframe width="280" height="250" frameborder="0" style="border:0" src=${similarMapURL}" allowfullscreen>;
+  $('#restaurant-location').empty();
+  $('#restaurant-map').addClass('hidden').removeClass('backdrop');
+  $('#restaurant-name').text("").text(similarVenueName + ` Location:`);
+  $('#restaurant-location').append(
+    `<iframe width="280" height="250" frameborder="0" style="border:0" src=${similarMapURL}" allowfullscreen>;
       </iframe>`
-    );
-   $('#restaurant-map').removeClass('hidden');
-   $('#restaurant-map').addClass('backdrop');
+  );
+  $('#restaurant-map').removeClass('hidden').addClass('backdrop');
 };
 
 
@@ -134,42 +121,33 @@ function getRestaurantList(query, limit, foodType) {
   fetch(url)
     .then(response => {
       if (response.ok) {
-      return response.json();
+        return response.json();
       }
-      throw new Error(response.statusText);
+      console.log(response);
+      throw new Error('There was an error getting your results. Please make sure it was a valid city or try again later.');
     })
     .then(responseJson => {
-        if (responseJson.response.venues.length > 1) {
+      if (responseJson.response.venues.length > 1) {
         displayResults(responseJson);
-        }
-        else {
-          $('#js-similar-result-list').empty();
-          $('#js-similar-result-list').removeClass('backdrop');
-          $('#results').addClass('hidden');
-          $('#results').removeClass('backdrop');
-          $('#similar-venues').empty();
-          $('#more-venues').addClass('hidden');
-          $('#more-venues').removeClass('backdrop');
-          $('#restaurant-location').empty();
-          $('#restaurant-map').addClass('hidden');
-          $('#restaurant-map').removeClass('backdrop');
-          $('#js-switch-type').addClass('backdrop');
-          $('#js-switch-type').text(`Currently there are no restuarants in that category avaialble, please select another Restaurant Type.`);
-        }
+      } else {
+        $('#js-similar-result-list').empty().removeClass('backdrop');
+        $('#results').addClass('hidden').removeClass('backdrop');
+        $('#similar-venues').empty();
+        $('#more-venues').addClass('hidden').removeClass('backdrop');
+        $('#restaurant-location').empty();
+        $('#restaurant-map').addClass('hidden').removeClass('backdrop');
+        $('#js-switch-type').addClass('backdrop').text(`Currently there are no restuarants in that category avaialble, please select another Restaurant Type.`);
+      }
     })
     .catch(err => {
-        $('#js-similar-result-list').empty();
-        $('#js-similar-result-list').removeClass('backdrop');
-        $('#results').addClass('hidden');
-        $('#results').removeClass('backdrop');
-        $('#similar-venues').empty();
-        $('#more-venues').addClass('hidden');
-        $('#more-venues').removeClass('backdrop');
-        $('#restaurant-location').empty();
-        $('#restaurant-map').addClass('hidden');
-        $('#restaurant-map').removeClass('backdrop');
-        
-        $('#js-error-message').text(`Please check your connection: ${err.message}`);
+      $('#js-similar-result-list').empty().removeClass('backdrop');
+      $('#results').addClass('hidden').removeClass('backdrop');
+      $('#similar-venues').empty();
+      $('#more-venues').addClass('hidden').removeClass('backdrop');
+      $('#restaurant-location').empty();
+      $('#restaurant-map').addClass('hidden').removeClass('backdrop');
+
+      $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
 
@@ -188,37 +166,29 @@ function getVenueInfo(venueId, secondURL) {
   fetch(newUrl)
     .then(response => {
       if (response.ok) {
-      return response.json();
+        return response.json();
       }
       throw new Error(response.statusText);
     })
     .then(responseJson => {
-        if (responseJson.response.similarVenues.items.length > 1) {
+      if (responseJson.response.similarVenues.items.length > 1) {
         getSimilarVenues(responseJson);
-        }
-        else {
-        $('#results').addClass('hidden');
-        $('#results').removeClass('backdrop');
+      } else {
+        $('#results').addClass('hidden').removeClass('backdrop');
         $('#similar-venues').empty();
-        $('#more-venues').addClass('hidden');
-        $('#more-venues').removeClass('backdrop');
-        $('#js-similar-result-list').addClass('backdrop');    
-        $('#js-similar-result-list').text(`Currently there are no similar restuarants in the selected city.`);
-        }
-    
+        $('#more-venues').addClass('hidden').removeClass('backdrop');
+        $('#js-similar-result-list').addClass('backdrop').text(`Currently there are no similar restuarants in the selected city.`);
+      }
+
     })
-    .catch(err => { 
-        $('#js-similar-result-list').empty();
-        $('#js-similar-result-list').removeClass('backdrop');
-        $('#results').addClass('hidden');
-        $('#results').removeClass('backdrop');
-        $('#similar-venues').empty();
-        $('#more-venues').addClass('hidden');
-        $('#more-venues').removeClass('backdrop');
-        $('#restaurant-location').empty();
-        $('#restaurant-map').addClass('hidden');
-        $('#restaurant-map').removeClass('backdrop');
-        $('#js-error-message').text(`Please check your connection: ${err.message}`);
+    .catch(err => {
+      $('#js-similar-result-list').empty().removeClass('backdrop');
+      $('#results').addClass('hidden').removeClass('backdrop');
+      $('#similar-venues').empty();
+      $('#more-venues').addClass('hidden').removeClass('backdrop');
+      $('#restaurant-location').empty();
+      $('#restaurant-map').addClass('hidden').removeClass('backdrop');
+      $('#js-error-message').text(`Please check your connection: ${err.message}`);
     })
 };
 
@@ -237,10 +207,10 @@ function watchForm() {
 
 //slider
 var slider = document.getElementById("js-limit");
-var output = document.getElementById("demo");
+var output = document.getElementById("limit-slider");
 output.innerHTML = slider.value;
 
-slider.oninput = function() {
+slider.oninput = function () {
   output.innerHTML = this.value;
 };
 
