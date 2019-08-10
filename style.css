@@ -37,14 +37,15 @@ h1, form, .backdrop, .about {
     color: black;
     display: inline-block;
     padding: 10px 10px;
-        
+    
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
 }
 
-.error-message {
-    color: black;
+.about {
+    margin: 0 auto; 
 }
+
 
 #js-city-search {
     height: 30px;

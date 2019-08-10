@@ -124,7 +124,8 @@ function getRestaurantList(query, limit, foodType) {
         return response.json();
       }
       console.log(response);
-      throw new Error('There was an error getting your results. Please make sure it was a valid city or try again later.');
+      $('#js-error-message').addClass('backdrop');
+      throw new Error ('There was an error getting your results. Please make sure it was a valid city or try again later.');
     })
     .then(responseJson => {
       if (responseJson.response.venues.length > 1) {
