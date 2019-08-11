@@ -149,7 +149,7 @@ function getRestaurantList(query, limit, foodType) {
       $('#restaurant-location').empty();
       $('#restaurant-map').addClass('hidden').removeClass('backdrop');
       $('#js-switch-type').empty().removeClass('backdrop');
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+      $('#js-error-message').text(`Something went wrong: ${err.message}`).addClass('backdrop');
     });
 }
 
